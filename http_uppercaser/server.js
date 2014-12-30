@@ -1,15 +1,14 @@
 var http = require('http')
 var port = process.argv[2]
+var stream = require('stream');
+var date = new Date()
 
 var server = http.createServer(function(req, res) {
-  if (req.method === 'POST') {
-    req.on('data', function(chunk) {
-      transformedChunk = chunk.toString().toUpperCase()
-    }).pipe(res);
-  } else {
-    console.log('You have failed to comply with our stringent demands');
-    return false
-  }
+  var uppercase = new stream.Transform();
+  uppercase._transform = function (data, enc, cb) {
+    cb(null, data.toString().toUpperCase());
+  };
+  req.pipe(uppercase).pipe(res);
 })
 
 server.listen(port)
