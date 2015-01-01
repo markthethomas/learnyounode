@@ -26,8 +26,7 @@ var server = http.createServer(function(req, res) {
       break;
     default:
       console.log("you are not one for the time, are you?");
-      res.write
-      Head(404)
+      res.writeHead(404)
       res.end()
   }
 });
